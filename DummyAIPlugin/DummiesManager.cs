@@ -213,7 +213,7 @@ public class DummiesManager(DummyAIPlugin? plugin)
     private void Posses(ReferenceHub target)
     {
         var agent = new DummyAgent(target);
-        agent.Posses();
+        agent.Activate();
         _dummies.Add(target, agent);
     }
 
@@ -228,7 +228,7 @@ public class DummiesManager(DummyAIPlugin? plugin)
             return;
         }
 
-        agent.Unposses();
+        agent.Disable();
         _dummies.Remove(target);
     }
 

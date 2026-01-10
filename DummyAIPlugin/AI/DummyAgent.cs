@@ -61,15 +61,15 @@ public class DummyAgent(ReferenceHub hub)
             return;
         }
 
-        Posses();
+        Activate();
     }
 
     /// <summary>
-    /// Possesses or restarts the dummy.
+    /// Activates or restarts the dummy.
     /// </summary>
-    public void Posses()
+    public void Activate()
     {
-        Unposses();
+        Disable();
         var roleObj = Hub.roleManager.CurrentRole;
         var fpcRole = roleObj as FpcStandardRoleBase;
         CurrentRole = roleObj.RoleTypeId;
@@ -114,9 +114,9 @@ public class DummyAgent(ReferenceHub hub)
     }
 
     /// <summary>
-    /// Unpossesses the dummy.
+    /// Disables the dummy.
     /// </summary>
-    public void Unposses()
+    public void Disable()
     {
         Mind?.Terminate();
         Mind = null;
@@ -149,7 +149,7 @@ public class DummyAgent(ReferenceHub hub)
     {
         var sb = StringBuilderPool.Shared.Rent("<size=14><align=left>");
         Mind!.DisplayActionPlan(sb);
-        SendTextHintToSpectators(StringBuilderPool.Shared.ToStringReturn(sb), 2.0f);
+        SendTextHintToSpectators(StringBuilderPool.Shared.ToStringReturn(sb), 10.0f);
     }
 
     /// <summary>

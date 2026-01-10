@@ -124,7 +124,7 @@ public class Mind
 
         if (actionPlan is null)
         {
-            sb.Append("No action plan available\n");
+            sb.Append("<color=red>No action plan available</color>\n");
             return;
         }
 
@@ -152,7 +152,7 @@ public class Mind
     /// <param name="action">Action to display.</param>
     private void DisplayAction(StringBuilder sb, Action action)
     {
-        sb.Append(action.Name).Append('(');
+        sb.Append(action.Name).Append('(').Append(' ');
 
         foreach (var cond in action.Preconditions)
         {
