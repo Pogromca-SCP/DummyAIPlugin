@@ -8,7 +8,7 @@ namespace DummyAIPlugin.Commands;
 /// Base class for dummy commands.
 /// </summary>
 /// <param name="dummiesManager">Reference to dummies manager.</param>
-public abstract class DummyCommandBase(DummiesManager? dummiesManager) : IUsageProvider
+public abstract class DummyCommandBase(DummiesManager dummiesManager) : IUsageProvider
 {
     /// <summary>
     /// Defines command usage prompts.
@@ -18,7 +18,7 @@ public abstract class DummyCommandBase(DummiesManager? dummiesManager) : IUsageP
     /// <summary>
     /// Contains a reference to dummies manager.
     /// </summary>
-    private readonly DummiesManager? _dummiesManager = dummiesManager;
+    protected DummiesManager DummiesManager { get; } = dummiesManager;
 
     /// <summary>
     /// Executes the command.
@@ -37,12 +37,6 @@ public abstract class DummyCommandBase(DummiesManager? dummiesManager) : IUsageP
             return false;
         }
 
-        if (_dummiesManager is null)
-        {
-            response = DummyAIParentCommand.AIManagerMissingMessage;
-            return false;
-        }
-
         if (arguments.Count < 1)
         {
             response = $"Please specify a valid argument.\nUsage: {this.DisplayCommandUsage()}";
@@ -51,7 +45,7 @@ public abstract class DummyCommandBase(DummiesManager? dummiesManager) : IUsageP
 
         if ("all".Equals(arguments.At(0), StringComparison.OrdinalIgnoreCase))
         {
-            response = HandleAllDummiesCommand(_dummiesManager);
+            response = HandleAllDummiesCommand();
             return true;
         }
 
@@ -67,7 +61,7 @@ public abstract class DummyCommandBase(DummiesManager? dummiesManager) : IUsageP
 
         foreach (var hub in list)
         {
-            if (hub is not null && hub.IsDummy && HandleDummyCommand(_dummiesManager, hub))
+            if (hub is not null && hub.IsDummy && HandleDummyCommand(hub))
             {
                 ++count;
             }
@@ -80,15 +74,13 @@ public abstract class DummyCommandBase(DummiesManager? dummiesManager) : IUsageP
     /// <summary>
     /// Handles the dummy command functionality for all active dummies.
     /// </summary>
-    /// <param name="manager">Dummies manager instance to use.</param>
     /// <returns>Response to display in sender's console.</returns>
-    protected abstract string HandleAllDummiesCommand(DummiesManager manager);
+    protected abstract string HandleAllDummiesCommand();
 
     /// <summary>
     /// Handles the dummy command functionality.
     /// </summary>
-    /// <param name="manager">Dummies manager instance to use.</param>
     /// <param name="dummy">Found dummy.</param>
     /// <returns>Whether or not the operation was successful.</returns>
-    protected abstract bool HandleDummyCommand(DummiesManager manager, ReferenceHub dummy);
+    protected abstract bool HandleDummyCommand(ReferenceHub dummy);
 }

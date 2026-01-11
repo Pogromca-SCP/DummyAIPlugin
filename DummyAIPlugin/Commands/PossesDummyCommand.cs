@@ -6,7 +6,7 @@ namespace DummyAIPlugin.Commands;
 /// Command used to posses dummies.
 /// </summary>
 /// <param name="dummiesManager">Reference to dummies manager.</param>
-public class PossesDummyCommand(DummiesManager? dummiesManager) : DummyCommandBase(dummiesManager), ICommand
+public class PossesDummyCommand(DummiesManager dummiesManager) : DummyCommandBase(dummiesManager), ICommand
 {
     /// <summary>
     /// Contains command name.
@@ -24,12 +24,12 @@ public class PossesDummyCommand(DummiesManager? dummiesManager) : DummyCommandBa
     public string Description { get; } = "Attaches an AI controller to a non-controlled dummy.";
     
     /// <inheritdoc />
-    protected override string HandleAllDummiesCommand(DummiesManager manager)
+    protected override string HandleAllDummiesCommand()
     {
-        var count = manager.PossesAllDummies();
+        var count = DummiesManager.PossesAllDummies();
         return $"Done! Found and possessed {count} dummies!";
     }
 
     /// <inheritdoc />
-    protected override bool HandleDummyCommand(DummiesManager manager, ReferenceHub dummy) => manager.PossesDummy(dummy) == PossessionResult.Success;
+    protected override bool HandleDummyCommand(ReferenceHub dummy) => DummiesManager.PossesDummy(dummy) == PossessionResult.Success;
 }

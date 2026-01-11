@@ -15,11 +15,6 @@ public class DummyAIParentCommand : ParentCommand, IUsageProvider
     public const PlayerPermissions AIManagementPermissions = PlayerPermissions.ForceclassWithoutRestrictions;
 
     /// <summary>
-    /// Message to use when AI dummies manager is missing.
-    /// </summary>
-    public const string AIManagerMissingMessage = "Dummies AI manager is unavailable.";
-
-    /// <summary>
     /// Checks if command sender has required permissions for AI management.
     /// </summary>
     /// <param name="sender">Sender to verify.</param>
@@ -63,13 +58,13 @@ public class DummyAIParentCommand : ParentCommand, IUsageProvider
     /// <summary>
     /// Contains a reference to dummies manager.
     /// </summary>
-    private readonly DummiesManager? _dummiesManager;
+    private readonly DummiesManager _dummiesManager;
 
     /// <summary>
     /// Initializes the command.
     /// </summary>
     /// <param name="dummiesManager">Reference to dummies manager.</param>
-    public DummyAIParentCommand(DummiesManager? dummiesManager)
+    public DummyAIParentCommand(DummiesManager dummiesManager)
     {
         _dummiesManager = dummiesManager;
         LoadGeneratedCommands();
@@ -80,11 +75,6 @@ public class DummyAIParentCommand : ParentCommand, IUsageProvider
     /// </summary>
     public override void LoadGeneratedCommands()
     {
-        if (_dummiesManager is null)
-        {
-            return;
-        }
-
         RegisterCommand(new CreateDummyCommand(_dummiesManager));
         RegisterCommand(new PossesDummyCommand(_dummiesManager));
         RegisterCommand(new UnpossesDummyCommand(_dummiesManager));
@@ -105,12 +95,6 @@ public class DummyAIParentCommand : ParentCommand, IUsageProvider
         if (problem is not null)
         {
             response = problem;
-            return false;
-        }
-
-        if (_dummiesManager is null)
-        {
-            response = AIManagerMissingMessage;
             return false;
         }
 

@@ -15,7 +15,7 @@ namespace DummyAIPlugin;
 /// Adds and removes AI controlled dummies and keeps track of active AI dummies.
 /// </summary>
 /// <param name="plugin">Reference to plugin object for access to config.</param>
-public class DummiesManager(DummyAIPlugin? plugin)
+public class DummiesManager(DummyAIPlugin plugin)
 {
     /// <summary>
     /// Retrieves all active AI dummies.
@@ -25,7 +25,7 @@ public class DummiesManager(DummyAIPlugin? plugin)
     /// <summary>
     /// Contains reference to plugin object for access to config object.
     /// </summary>
-    private readonly DummyAIPlugin? _plugin = plugin;
+    private readonly DummyAIPlugin _plugin = plugin;
 
     /// <summary>
     /// Used to keep track of all active AI dummies.
@@ -251,7 +251,7 @@ public class DummiesManager(DummyAIPlugin? plugin)
     {
         while (true)
         {
-            var showActionPlan = _plugin?.Config?.EnableMindVisualizations ?? false;
+            var showActionPlan = _plugin.Config?.EnableMindVisualizations ?? false;
 
             foreach (var agent in _dummies.Values)
             {

@@ -4,7 +4,6 @@ using LabApi.Features.Console;
 using NorthwoodLib.Pools;
 using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
-using PlayerRoles.PlayableScps.Scp049;
 using PlayerRoles.Spectating;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +70,7 @@ public class DummyAgent(ReferenceHub hub)
     {
         Disable();
         var roleObj = Hub.roleManager.CurrentRole;
-        var fpcRole = roleObj as FpcStandardRoleBase;
+        var fpcRole = roleObj as IFpcRole;
         CurrentRole = roleObj.RoleTypeId;
 
         switch (CurrentRole)

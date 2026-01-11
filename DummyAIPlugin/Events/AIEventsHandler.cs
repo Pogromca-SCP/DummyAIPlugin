@@ -1,5 +1,6 @@
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.CustomHandlers;
+using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using MEC;
 using PlayerRoles;
@@ -12,7 +13,7 @@ namespace DummyAIPlugin.Events;
 /// </summary>
 /// <param name="plugin">Reference to plugin object for access to config.</param>
 /// <param name="dummiesManager">Reference to dummies manager.</param>
-public class AIEventsHandler(DummyAIPlugin? plugin, DummiesManager? dummiesManager) : CustomEventsHandler
+public class AIEventsHandler(DummyAIPlugin plugin, DummiesManager dummiesManager) : CustomEventsHandler
 {
     /// <summary>
     /// Attempts to spawn a dummy AI if the selected role is not present.
@@ -30,20 +31,21 @@ public class AIEventsHandler(DummyAIPlugin? plugin, DummiesManager? dummiesManag
     /// <summary>
     /// Contains reference to plugin object for access to config object.
     /// </summary>
-    private readonly DummyAIPlugin? _plugin = plugin;
+    private readonly DummyAIPlugin _plugin = plugin;
 
     /// <summary>
     /// Contains a reference to dummies manager.
     /// </summary>
-    private readonly DummiesManager? _dummiesManager = dummiesManager;
+    private readonly DummiesManager _dummiesManager = dummiesManager;
 
     /// <inheritdoc />
     public override void OnServerRoundStarted()
     {
-        var config = _plugin?.Config;
+        var config = _plugin.Config;
 
-        if (config is null || _dummiesManager is null)
+        if (config is null)
         {
+            Logger.Warn("Cannot spawn AI dummies on round start because config object is missing.");
             return;
         }
 
@@ -57,11 +59,11 @@ public class AIEventsHandler(DummyAIPlugin? plugin, DummiesManager? dummiesManag
     }
 
     /// <inheritdoc />
-    public override void OnServerRoundRestarted() => _dummiesManager?.UnpossesAllDummies();
+    public override void OnServerRoundRestarted() => _dummiesManager.UnpossesAllDummies();
 
     /// <inheritdoc />
-    public override void OnPlayerLeft(PlayerLeftEventArgs ev) => _dummiesManager?.UnpossesDummy(ev.Player?.ReferenceHub);
+    public override void OnPlayerLeft(PlayerLeftEventArgs ev) => _dummiesManager.UnpossesDummy(ev.Player.ReferenceHub);
 
     /// <inheritdoc />
-    public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev) => _dummiesManager?.HandleRoleChange(ev.Player?.ReferenceHub);
+    public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev) => _dummiesManager.HandleRoleChange(ev.Player.ReferenceHub);
 }

@@ -14,7 +14,7 @@ public class Wander(FirstPersonMovementModule fpcModule, float wanderRadius) : I
     public bool CanPerform => !_motor.MovementDetected;
 
     /// <inheritdoc />
-    public bool Complete => _motor.Velocity.magnitude < 0.1f;
+    public bool Complete => _motor.MovementDetected;
 
     /// <summary>
     /// Contains used first person control motor.
@@ -38,7 +38,7 @@ public class Wander(FirstPersonMovementModule fpcModule, float wanderRadius) : I
         randomDirection = new(randomDirection.x, 0.0f, randomDirection.z);
         randomDirection = _motor.Hub.PlayerCameraReference.TransformDirection(randomDirection).NormalizeIgnoreY();
         randomDirection = _motor.Position + randomDirection * 3.0f;
-        _mouseLook.CurrentHorizontal = Quaternion.LookRotation(randomDirection - _motor.Position, Vector3.up).eulerAngles.y;
+        _mouseLook.LookAtDirection(randomDirection - _motor.Position);
         _motor.ReceivedPosition = new(randomDirection);
     }
 

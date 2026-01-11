@@ -6,7 +6,7 @@ namespace DummyAIPlugin.Commands;
 /// Command used to destroy dummies.
 /// </summary>
 /// <param name="dummiesManager">Reference to dummies manager.</param>
-public class DestroyDummyCommand(DummiesManager? dummiesManager) : DummyCommandBase(dummiesManager), ICommand
+public class DestroyDummyCommand(DummiesManager dummiesManager) : DummyCommandBase(dummiesManager), ICommand
 {
     /// <summary>
     /// Contains command name.
@@ -24,12 +24,12 @@ public class DestroyDummyCommand(DummiesManager? dummiesManager) : DummyCommandB
     public string Description { get; } = "Removes an AI controller and destroys controlled dummy.";
     
     /// <inheritdoc />
-    protected override string HandleAllDummiesCommand(DummiesManager manager)
+    protected override string HandleAllDummiesCommand()
     {
-        var count = manager.DestroyAllDummies();
+        var count = DummiesManager.DestroyAllDummies();
         return $"Done! Found and destroyed {count} dummies!";
     }
 
     /// <inheritdoc />
-    protected override bool HandleDummyCommand(DummiesManager manager, ReferenceHub dummy) => manager.DestroyDummy(dummy);
+    protected override bool HandleDummyCommand(ReferenceHub dummy) => DummiesManager.DestroyDummy(dummy);
 }

@@ -8,7 +8,7 @@ namespace DummyAIPlugin.Commands;
 /// Command used to create dummies.
 /// </summary>
 /// <param name="dummiesManager">Reference to dummies manager.</param>
-public class CreateDummyCommand(DummiesManager? dummiesManager) : ICommand, IUsageProvider
+public class CreateDummyCommand(DummiesManager dummiesManager) : ICommand, IUsageProvider
 {
     /// <summary>
     /// Contains command name.
@@ -33,7 +33,7 @@ public class CreateDummyCommand(DummiesManager? dummiesManager) : ICommand, IUsa
     /// <summary>
     /// Contains a reference to dummies manager.
     /// </summary>
-    private readonly DummiesManager? _dummiesManager = dummiesManager;
+    private readonly DummiesManager _dummiesManager = dummiesManager;
 
     /// <summary>
     /// Executes the command.
@@ -49,12 +49,6 @@ public class CreateDummyCommand(DummiesManager? dummiesManager) : ICommand, IUsa
         if (problem is not null)
         {
             response = problem;
-            return false;
-        }
-
-        if (_dummiesManager is null)
-        {
-            response = DummyAIParentCommand.AIManagerMissingMessage;
             return false;
         }
 
