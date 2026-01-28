@@ -7,7 +7,6 @@ using PlayerRoles.PlayableScps.Scp049;
 using PlayerRoles.Spectating;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Jobs;
 
 namespace DummyAIPlugin.AI;
 
@@ -138,22 +137,13 @@ public class DummyAgent(ReferenceHub hub)
     /// Performs AI update.
     /// </summary>
     /// <param name="showActionPlan">Whether or not the agent should display current action plan to spectators.</param>
-    /// <returns>Job handles enumerator.</returns>
-    public IEnumerator<JobHandle> Update(bool showActionPlan)
+    public void Update(bool showActionPlan)
     {
-        if (Perception is not null)
-        {
-            var perceptionHandles = Perception.Update();
-
-            while (perceptionHandles.MoveNext())
-            {
-                yield return perceptionHandles.Current;
-            }
-        }
+        Perception?.Update();
 
         if (Mind is null)
         {
-            yield break;
+            return;
         }
 
         Mind.Update();
@@ -162,8 +152,6 @@ public class DummyAgent(ReferenceHub hub)
         {
             DisplayActionPlan();
         }
-
-        yield break;
     }
 
     /// <summary>

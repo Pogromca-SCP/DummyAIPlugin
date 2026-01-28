@@ -28,11 +28,11 @@ public class BeliefFactory(Dictionary<string, Belief> beliefs)
     public void AddBelief(string name, Func<bool> condition) => AddBelief(new(name, condition));
 
     /// <summary>
-    /// Addds new sense belief to the map.
+    /// Addds new predicate belief to the map.
     /// </summary>
-    /// <typeparam name="T">Type of sense used on condition evaluation.</typeparam>
+    /// <typeparam name="T">Type of parameter on condition evaluation.</typeparam>
     /// <param name="name">Name of new belief.</param>
-    /// <param name="sense">Sense to use on condition evaluation.</param>
-    /// <param name="predicate">New belief's sense based condition.</param>
-    public void AddSenseBelief<T>(string name, T sense, Predicate<T> predicate) where T : ISense => AddBelief(new(name, () => predicate(sense)));
+    /// <param name="param">Parameter to use on condition evaluation.</param>
+    /// <param name="predicate">New belief's predicate condition.</param>
+    public void AddPredicateBelief<T>(string name, T param, Predicate<T> predicate) => AddBelief(new(name, () => predicate(param)));
 }

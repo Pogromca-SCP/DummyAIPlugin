@@ -1,7 +1,5 @@
 using DummyAIPlugin.Components;
 using System.Collections.Generic;
-using Unity.Collections;
-using Unity.Jobs;
 using UnityEngine;
 
 namespace DummyAIPlugin.AI;
@@ -47,11 +45,6 @@ public class Perception
     public List<ISense> Senses { get; }
 
     /// <summary>
-    /// Stores processed senses job enumerators.
-    /// </summary>
-    private readonly List<IEnumerator<JobHandle>> _processedSenses;
-
-    /// <summary>
     /// Contains a reference to sensing game object.
     /// </summary>
     private readonly GameObject _sensingObject;
@@ -68,7 +61,6 @@ public class Perception
     public Perception(ReferenceHub dummy)
     {
         Senses = [];
-        _processedSenses = [];
         var sensing = new GameObject("DummySense");
         _sensingObject = sensing;
         sensing.layer = PerceptionLayer;
@@ -127,48 +119,11 @@ public class Perception
     /// <summary>
     /// Performs perception update.
     /// </summary>
-    /// <returns>Job handles enumerator.</returns>
-    public IEnumerator<JobHandle> Update()
+    public void Update()
     {
-        _processedSenses.Clear();
-        var sensesCount = Senses.Count;
-
         foreach (var sense in Senses)
         {
-            _processedSenses.Add(sense.ProcessSensibility());
-        }
-
-        var completedCount = 0;
-        int jobHandlesCount;
-        var jobHandlesBuffer = new NativeArray<JobHandle>(sensesCount, Allocator.Temp);
-
-        while (completedCount < sensesCount)
-        {
-            completedCount = 0;
-            jobHandlesCount = 0;
-
-            for (var i = 0; i < sensesCount; ++i)
-            {
-                var processSenses = _processedSenses[i];
-
-                if (processSenses.MoveNext())
-                {
-                    jobHandlesBuffer[jobHandlesCount] = processSenses.Current;
-                    ++jobHandlesCount;
-                }
-                else
-                {
-                    ++completedCount;
-                }
-            }
-
-            var jobHandles = jobHandlesBuffer.GetSubArray(0, jobHandlesCount);
-            yield return JobHandle.CombineDependencies(jobHandles);
-        }
-
-        foreach (var sense in Senses)
-        {
-            sense.ProcessSensedItems();
+            sense.Update();
         }
     }
 

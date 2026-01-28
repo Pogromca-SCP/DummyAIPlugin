@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Unity.Jobs;
 using UnityEngine;
 
 namespace DummyAIPlugin.AI;
@@ -22,13 +20,7 @@ public interface ISense
     void ProcessExit(Collider other);
 
     /// <summary>
-    /// Updates perception sensibility.
+    /// Performs sense update.
     /// </summary>
-    /// <returns>Job handles enumerator.</returns>
-    IEnumerator<JobHandle> ProcessSensibility();
-
-    /// <summary>
-    /// Processes all sensed items.
-    /// </summary>
-    void ProcessSensedItems();
+    void Update();
 }
