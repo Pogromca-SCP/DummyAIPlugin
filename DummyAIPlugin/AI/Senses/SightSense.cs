@@ -19,37 +19,9 @@ public abstract class SightSense<TComponent>(ReferenceHub dummy) : ISense where 
     protected static TComponent? GetComponent(Collider collider) => collider.GetComponentInParent<TComponent>();
 
     /// <summary>
-    /// Checks if target transform is located within camera's FOV.
+    /// Holds FOV*2 of character for <see cref="SightSense{TComponent}"/>, divide desired FOV by 2 
     /// </summary>
-    /// <param name="transform">Camera transform.</param>
-    /// <param name="targetTransform">Target transform to check.</param>
-    /// <returns>Whether or not the target transform is within camera's FOV.</returns>
-    protected static bool IsWithinFov(Transform transform, Transform targetTransform) =>
-        IsWithinFov(transform.position, transform.forward, targetTransform.position);
-    
-    /// <summary>
-    /// Checks if target vector is located within camera's FOV.
-    /// </summary>
-    /// <param name="position">Camera position.</param>
-    /// <param name="forward">Camera forward vector.</param>
-    /// <param name="targetPosition">Target position to check.</param>
-    /// <returns>Whether or not the target position is within camera's FOV.</returns>
-    protected static bool IsWithinFov(Vector3 position, Vector3 forward, Vector3 targetPosition)
-    {
-        var diff = Vector3.Normalize(targetPosition - position);
-
-        if (Vector3.Dot(forward, diff) < 0.0f)
-        {
-            return false;
-        }
-
-        if (Vector3.Angle(forward, diff) > 90.0f)
-        {
-            return false;
-        }
-
-        return true;
-    }
+    public float Fov { get; set; } = 90.0f;
 
     /// <summary>
     /// Contains dummy's reference hub.
@@ -187,5 +159,38 @@ public abstract class SightSense<TComponent>(ReferenceHub dummy) : ISense where 
     {
         var camera = Dummy.PlayerCameraReference;
         return IsWithinFov(camera.position, camera.forward, targetPosition);
+    }
+
+    /// <summary>
+    /// Checks if target transform is located within camera's FOV.
+    /// </summary>
+    /// <param name="transform">Camera transform.</param>
+    /// <param name="targetTransform">Target transform to check.</param>
+    /// <returns>Whether or not the target transform is within camera's FOV.</returns>
+    protected bool IsWithinFov(Transform transform, Transform targetTransform) =>
+        IsWithinFov(transform.position, transform.forward, targetTransform.position);
+
+    /// <summary>
+    /// Checks if target vector is located within camera's FOV.
+    /// </summary>
+    /// <param name="position">Camera position.</param>
+    /// <param name="forward">Camera forward vector.</param>
+    /// <param name="targetPosition">Target position to check.</param>
+    /// <returns>Whether or not the target position is within camera's FOV.</returns>
+    protected bool IsWithinFov(Vector3 position, Vector3 forward, Vector3 targetPosition)
+    {
+        var diff = Vector3.Normalize(targetPosition - position);
+
+        if (Vector3.Dot(forward, diff) < 0.0f)
+        {
+            return false;
+        }
+
+        if (Vector3.Angle(forward, diff) > Fov)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
