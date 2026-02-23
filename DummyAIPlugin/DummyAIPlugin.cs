@@ -32,7 +32,7 @@ public class DummyAIPlugin : Plugin<Config>
     /// <summary>
     /// Contains plugin author.
     /// </summary>
-    public const string PluginAuthor = "Adam Szerszenowicz";
+    public const string PluginAuthor = "Adam Szerszenowicz and Grzegorz Ptaszyński";
 
     /// <inheritdoc />
     public override string Name { get; } = PluginName;
