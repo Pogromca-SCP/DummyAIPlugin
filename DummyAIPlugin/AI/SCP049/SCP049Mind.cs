@@ -25,7 +25,7 @@ public class SCP049Mind : Mind
     {
         PlayersSense = new(hub);
         perception.Senses.Add(PlayersSense);
-        PlayersSense.Fov = 45.0f;
+        PlayersSense.FOV = 45.0f;
 
         var factory = new BeliefFactory(Beliefs);
         const string TargetDetected = "TargetDetected";
