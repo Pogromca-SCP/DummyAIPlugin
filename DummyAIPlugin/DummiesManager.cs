@@ -145,7 +145,7 @@ public class DummiesManager(DummyAIPlugin plugin)
     {
         var affectedDummies = 0;
 
-        foreach (var player in Player.GetAll(PlayerSearchFlags.DummyNpcs).Select(p => p.ReferenceHub))
+        foreach (var player in Player.GetAll(PlayerSearchFlags.DummyNpcs).Select(static p => p.ReferenceHub))
         {
             if (player is not null && player.IsDummy && !_dummies.ContainsKey(player))
             {
@@ -181,7 +181,7 @@ public class DummiesManager(DummyAIPlugin plugin)
     {
         var affectedDummies = 0;
 
-        foreach (var player in Player.GetAll(PlayerSearchFlags.DummyNpcs).Select(p => p.ReferenceHub))
+        foreach (var player in Player.GetAll(PlayerSearchFlags.DummyNpcs).Select(static p => p.ReferenceHub))
         {
             if (player is not null && player.IsDummy && _dummies.ContainsKey(player))
             {
@@ -218,7 +218,7 @@ public class DummiesManager(DummyAIPlugin plugin)
     {
         var affectedDummies = 0;
 
-        foreach (var player in Player.GetAll(PlayerSearchFlags.DummyNpcs).Select(p => p.ReferenceHub))
+        foreach (var player in Player.GetAll(PlayerSearchFlags.DummyNpcs).Select(static p => p.ReferenceHub))
         {
             if (player is not null && player.IsDummy && _dummies.ContainsKey(player))
             {

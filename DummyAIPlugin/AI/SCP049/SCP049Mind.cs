@@ -31,8 +31,8 @@ public class SCP049Mind : Mind
         const string TargetDetected = "TargetDetected";
         const string NoTargets = "NoTargets";
 
-        factory.AddPredicateBelief(TargetDetected, PlayersSense, s => s.ComponentsWithinSight.Any());
-        factory.AddPredicateBelief(NoTargets, PlayersSense, s => !s.ComponentsWithinSight.Any());
+        factory.AddPredicateBelief(TargetDetected, PlayersSense, static s => s.ComponentsWithinSight.Any());
+        factory.AddPredicateBelief(NoTargets, PlayersSense, static s => !s.ComponentsWithinSight.Any());
 
         Actions.Add(new Action.Builder("Idle", new IdleStrategy(0.01f))
             .AddEffect(Beliefs[TargetDetected])

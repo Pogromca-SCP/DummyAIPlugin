@@ -94,12 +94,12 @@ public abstract class SightSense<TComponent>(ReferenceHub dummy) : ISense where 
     /// <inheritdoc />
     public void Update()
     {
-        foreach (var group in _collidersToComponent.GroupBy(mapping => mapping.Value))
+        foreach (var group in _collidersToComponent.GroupBy(static mapping => mapping.Value))
         {
             var visible = false;
             var component = group.Key;
 
-            foreach (var collider in group.Select(ctc => ctc.Key))
+            foreach (var collider in group.Select(static ctc => ctc.Key))
             {
                 var center = collider.bounds.center;
 

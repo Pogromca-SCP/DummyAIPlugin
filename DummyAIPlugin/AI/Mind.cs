@@ -63,7 +63,7 @@ public class Mind
                 _currentGoal = _actionPlan.AgentGoal;
                 _currentAction = _actionPlan.Actions.Pop();
 
-                if (_currentAction.Preconditions.All(b => b.Evaluate()))
+                if (_currentAction.Preconditions.All(static b => b.Evaluate()))
                 {
                     _currentAction.Start();
                 }
@@ -178,7 +178,7 @@ public class Mind
     private ActionPlan? Plan(HashSet<Goal> goals, Goal? mostRecentGoal = null)
     {
         var orderedGoals = goals
-            .Where(g => g.DesiredEffects.Any(b => !b.Evaluate()))
+            .Where(static g => g.DesiredEffects.Any(static b => !b.Evaluate()))
             .OrderByDescending(g => g == mostRecentGoal ? g.Priority - 0.01f : g.Priority);
         
         foreach (var goal in orderedGoals)
@@ -196,7 +196,7 @@ public class Mind
 
                 while (goalNode.Leaves.Count > 0)
                 {
-                    var cheapestLeaf = goalNode.Leaves.OrderBy(leaf => leaf.Cost).First();
+                    var cheapestLeaf = goalNode.Leaves.OrderBy(static leaf => leaf.Cost).First();
                     goalNode = cheapestLeaf;
                     actionStack.Push(cheapestLeaf.Action!);
                 }
@@ -216,12 +216,12 @@ public class Mind
     /// <returns><see langword="true" /> when managed to find a path, <see langword="false" /> otherwise.</returns>
     private bool FindPath(Node parent, HashSet<Action> actions)
     {
-        var orderedActions = actions.OrderBy(a => a.Cost);
+        var orderedActions = actions.OrderBy(static a => a.Cost);
         
         foreach (var action in orderedActions)
         {
             var requiredEffects = parent.RequiredEffects;
-            requiredEffects.RemoveWhere(b => b.Evaluate());
+            requiredEffects.RemoveWhere(static b => b.Evaluate());
             
             if (requiredEffects.Count < 1)
             {

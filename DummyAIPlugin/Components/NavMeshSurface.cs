@@ -255,12 +255,12 @@ public class NavMeshSurface : MonoBehaviour
 
         if (IgnoreNavMeshAgent)
         {
-            sources.RemoveAll(x => x.component?.gameObject.GetComponent<NavMeshAgent>() is not null);
+            sources.RemoveAll(static x => x.component?.gameObject.GetComponent<NavMeshAgent>() is not null);
         }
 
         if (IgnoreNavMeshObstacle)
         {
-            sources.RemoveAll(x => x.component?.gameObject.GetComponent<NavMeshObstacle>() is not null);
+            sources.RemoveAll(static x => x.component?.gameObject.GetComponent<NavMeshObstacle>() is not null);
         }
 
         return sources;

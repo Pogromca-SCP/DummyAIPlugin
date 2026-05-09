@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: 10.0.x
         
-    - name: Build, test and upload artifacts
+    - name: Build and upload artifacts
       uses: Pogromca-SCP/build-nwapi-plugin@v2
       with:
         plugin-name: DummyAIPlugin
