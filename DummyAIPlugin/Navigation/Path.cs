@@ -46,7 +46,7 @@ public class Path(IPathParent parent, float waypointRadius = 2.0f)
     /// </summary>
     public int Current
     {
-        get => field;
+        get;
         private set => field = Waypoints.Count > 0 ? Mathf.Clamp(value, 0, Waypoints.Count - 1) : 0;
     }
 

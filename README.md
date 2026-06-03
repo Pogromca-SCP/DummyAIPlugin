@@ -6,4 +6,4 @@
 AI controlled dummy entities plugin for SCP: Secret Laboratory.
 
 > [!Warning]
-> This plugin is still in active development! It's not ready for usage yet!
+> This plugin is NOT in active development and it's not ready for usage yet!
