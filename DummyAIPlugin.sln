@@ -24,7 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Automation", "Automation", "{3117D3C0-F14E-92D0-99BD-5A3D2DF72B7C}"
 	ProjectSection(SolutionItems) = preProject
-		.github\dependabot.yml = .github\dependabot.yml
 		.github\workflows\build.yml = .github\workflows\build.yml
 	EndProjectSection
 EndProject
